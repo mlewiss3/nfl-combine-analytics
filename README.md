@@ -26,4 +26,4 @@ conventional wisdom overstates their importance.
 - player_season_stats.csv — career stats (10,124 player seasons)
 
 ## Status
-Data collection complete. Analysis in progress — Summer 2025.
+Data collection complete. Analysis in progress — Summer 2026.
