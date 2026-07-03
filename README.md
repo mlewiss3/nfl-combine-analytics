@@ -1,4 +1,3 @@
-# nfl-combine-analytics
 # NFL Combine Analytics
 
 Analyzing which NFL combine metrics actually predict career success 
