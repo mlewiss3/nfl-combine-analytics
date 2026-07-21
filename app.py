@@ -59,3 +59,34 @@ corr = pos_data[metric].corr(pos_data[outcome])
 ax2.text(0.05, 0.95, f'Correlation: {corr:.3f}', transform=ax2.transAxes, fontsize=12, verticalalignment='top')
 st.pyplot(fig2)
 plt.close()
+st.subheader("Key Findings")
+
+if position == 'WR':
+    st.write("""
+    - **Broad jump** is the strongest predictor of receiving production (r = 0.157 for TDs)
+    - **40-yard dash** shows near-zero correlation with career receiving yards (r = -0.062)
+    - All five combine metrics together explain only **3.3% of career receiving yards** (R² = 0.033)
+    - Conclusion: Raw speed is a poor indicator of WR success — explosive power matters more
+    """)
+elif position == 'CB':
+    st.write("""
+    - **Vertical jump** is the strongest predictor of pass deflections (r = 0.120)
+    - **40-yard dash** shows a negative correlation with career production
+    - Combine metrics together produce a **negative R² (-0.085)** — worse than guessing the average
+    - Conclusion: Combine testing does not reliably identify successful cornerbacks
+    """)
+elif position == 'S':
+    st.write("""
+    - **Vertical jump** is the strongest predictor of pass deflections (r = 0.134)
+    - **Shuttle run** shows the strongest negative correlation (-0.271 for tackles)
+    - Combine metrics together produce a **negative R² (-0.220)** — significantly worse than guessing
+    - Conclusion: For safeties, combine metrics may actively mislead evaluators
+    """)
+
+st.subheader("Overall Conclusion")
+st.write("""
+Across all three positions, NFL combine metrics explain very little about career success.
+The 40-yard dash — the most watched event at the combine — is a weak or negative predictor 
+for cornerbacks, safeties, and wide receivers alike. Jumping metrics (vertical and broad jump) 
+show the most consistent positive signal, suggesting explosive power matters more than raw speed.
+""")
