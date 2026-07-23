@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import anthropic
 
 st.title("NFL Combine Analytics")
 st.write("Analyzing which combine metrics predict career success for CB, S, and WR")
@@ -90,3 +91,32 @@ The 40-yard dash — the most watched event at the combine — is a weak or nega
 for cornerbacks, safeties, and wide receivers alike. Jumping metrics (vertical and broad jump) 
 show the most consistent positive signal, suggesting explosive power matters more than raw speed.
 """)
+st.subheader("Ask the AI Analyst")
+st.write("Ask any question about the combine data and findings")
+
+user_question = st.text_input("Your question:", placeholder="e.g. Why doesn't 40 time predict WR success?")
+
+if user_question:
+    client = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
+    
+    context = f"""
+    You are a sports analytics assistant. Here are the key findings from an NFL combine analytics project:
+    
+    - Dataset: 1,333 NFL players across CB, S, and WR positions
+    - WR: Combine metrics explain only 3.3% of career receiving yards (R² = 0.033). Broad jump is the strongest predictor.
+    - CB: Combine metrics produce R² of -0.085. Vertical jump is the strongest predictor. 40-yard dash is negative.
+    - S: Combine metrics produce R² of -0.220. Vertical jump leads, shuttle run strongly negative.
+    - Overall: The 40-yard dash barely predicts career success for any of these three positions.
+    
+    The user is currently viewing the {position} position. Answer their question clearly and concisely in 2-3 sentences.
+    """
+    
+    message = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1000,
+        messages=[
+            {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_question}"}
+        ]
+    )
+    
+    st.write(message.content[0].text)
